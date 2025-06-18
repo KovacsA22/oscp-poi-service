@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    image: oscp/poi-service:v1.0
+    ports:
+      - ${PORT}:3000
+    environment:
+      - NODE_ENV=production
+      - HTTP_PROXY=${MY_HTTP_PROXY}
+      - HTTPS_PROXY=${MY_HTTPS_PROXY}
+      - PORT=3000
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
